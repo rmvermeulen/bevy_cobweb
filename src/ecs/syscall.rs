@@ -106,7 +106,7 @@ where
 
     // run the system
     // - This automatically calls `apply_deferred`.
-    let result = system.sys.run(input, world);
+    let result = system.sys.run(input, world).expect("unwrapping previously infallible function.");
 
     // put the system back
     world.insert_resource(system);
@@ -209,7 +209,7 @@ impl WorldSyscallExt for World
     {
         let mut sys = IntoSystem::into_system(system);
         sys.initialize(self);
-        sys.run(input, self)
+        sys.run(input, self).expect("unwrapping previously infallible function.")
     }
 
     fn syscall_once_with_validation<I, O, S, Marker>(
@@ -226,7 +226,7 @@ impl WorldSyscallExt for World
         (validation)(self);
         let mut sys = IntoSystem::into_system(system);
         sys.initialize(self);
-        sys.run(input, self)
+        sys.run(input, self).expect("unwrapping previously infallible function.")
     }
 }
 

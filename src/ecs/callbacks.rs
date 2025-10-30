@@ -216,16 +216,19 @@ where
     if system.is_exclusive() {
         // Add the cleanup to run before any commands added by the system.
         world.commands().queue(move |world: &mut World| (cleanup)(world));
-        system.run(input, world)
+        system.run(input, world).expect("unwrapping previously infallible function.")
     } else {
         // For non-exclusive systems we need to run them unsafe because the safe version automatically
         // calls `apply_deferred`.
         let world_cell = world.as_unsafe_world_cell();
-        system.update_archetype_component_access(world_cell);
+
+        // NOTE: removed in bevy 0.17 and I don't know what replaces it
+        // system.update_archetype_component_access(world_cell);
+
         // SAFETY:
         // - We have exclusive access to the entire world.
         // - `update_archetype_component_access` has been called.
-        let result = unsafe { system.run_unsafe(input, world_cell) };
+        let result = unsafe { system.run_unsafe(input, world_cell) }.expect("unwrapping previously infallible function.");
 
         // Run our custom cleanup method.
         (cleanup)(world);

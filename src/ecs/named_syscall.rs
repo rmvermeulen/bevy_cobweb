@@ -76,7 +76,7 @@ where
         };
 
     // run the system
-    let result = system.run(input, world);
+    let result = system.run(input, world).expect("unwrapping previously infallible function.");
 
     // apply any pending changes
     system.apply_deferred(world);
@@ -125,7 +125,7 @@ where
         };
 
     // run the system
-    let result = system.run(input, world);
+    let result = system.run(input, world).expect("unwrapping previously infallible function.");
 
     // apply any pending changes
     system.apply_deferred(world);
