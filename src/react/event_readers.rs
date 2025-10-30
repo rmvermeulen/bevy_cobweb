@@ -225,13 +225,13 @@ fn example(mut c: Commands)
 ```
 */
 #[derive(SystemParam)]
-pub struct EntityEvent<'w, 's, T: Send + Sync + 'static>
+pub struct CobwebEntityEvent<'w, 's, T: Send + Sync + 'static>
 {
     tracker: Res<'w, EventAccessTracker>,
     data: Query<'w, 's, &'static EntityEventData<T>>,
 }
 
-impl<'w, 's, T: Send + Sync + 'static> EntityEvent<'w, 's, T>
+impl<'w, 's, T: Send + Sync + 'static> CobwebEntityEvent<'w, 's, T>
 {
     /// Reads entity event data.
     ///

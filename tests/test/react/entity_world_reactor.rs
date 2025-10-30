@@ -111,7 +111,7 @@ impl EntityWorldReactor for FullDataReactorMutable
     fn reactor(self) -> SystemCommandCallback
     {
         SystemCommandCallback::new(
-            move |mut data: EntityLocal<Self>, event: EntityEvent<usize>|
+            move |mut data: EntityLocal<Self>, event: CobwebEntityEvent<usize>|
             {
                 let (event_entity, event_data) = event.read();
                 let (entity, entity_data) = data.get_mut();
